@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>会员卡号: {{ card.number }}
+    </h1>
+    <h1>会员卡余额: ￥{{ card.money }}
+    </h1>
+</div>
+
+<a class="btn btn-primary btn-lg" href="{{ url_for('.charge', id=card.id) }}">给用户充值</a>
+<hr>
+<h2 class="centered">会员待处理订单</h2>
+<hr>
+<div>
+
+{% for order in posts %}
+<h4 class="text-right">{{ moment(order.timestamp).format('L') }}</h4>
+<h3>总价： ￥{{ order.sumcost }}</h3>
+<a class="btn btn-lg btn-success" href="{{ url_for('.staff_finish', id=order.id) }}">处理完毕</a>
+<h4>用户名： {{ order.author.username }}</h4>
+<h4>收货地址： {{ order.address }}</h4>
+<h4>联系方式： {{ order.phone }}</h4>
+{% if order.fetchway == 0 %}
+<h4>取货方式： 送货上门</h4>
+{% else %}
+<h4>取货方式： 上门自提</h4>
+{% endif %}
+<h4>订单明细</h4>
+<ul class="posts">
+  <div container>
+    <div row>
+      {% for item in order.details.all() %}
+      <li class="col-md-3 post">
+	<div class="profile-thumbnail">
+	  <a href="{{ url_for('.goods', id=item.goods_id) }}">
+	    {{ item.name }}
+	  </a>
+	</div>
+	<div class="post-body">购买价格： ￥{{ item.pricenow }}</div>
+	<div class="post-body">购买数量： {{ item.numbers }}</div>
+      </li>
+      {% endfor %}
+    </div>
+  </div>
+</ul>
+{% if order.payway == 0 %}
+<button type="button" class="btn btn-danger btn-lg btn-block disabled">未支付：货到付款</button>
+{% else %}
+<button type="button" class="btn btn-success btn-lg btn-block disabled">已支付：在线余额</button>
+{% endif %}
+<br><br>
+{% endfor %}
+
+</div>
+
+{% endblock %}

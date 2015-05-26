@@ -1,0 +1,8 @@
+<p>尊敬的用户 {{ user.username }},</p>
+<p>欢迎注册 <b>汉亭生鲜购物中心</b>!</p>
+<p>请激活您的账户 <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">点击此处</a>.</p>
+<p>当然,您也可以复制以下链接到浏览器地址栏中:</p>
+<p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
+<p>您忠实的朋友,</p>
+<p>汉亭生鲜购物中心欢迎您</p>
+<p><small>注意:通知邮件无需回复O(∩_∩)O~</small></p>

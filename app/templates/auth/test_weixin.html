@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="page-header">
+  <h2>欢迎微信用户: {{ user.name }}</h2>
+</div>
+<div class="col-md-4">
+  <h3>请完善您的个人资料,以享受更多服务O(∩_∩)O~</h3>
+  <br>
+
+    {% if user.name or user.location %}
+    <p>
+      {% if user.name %}<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 微信昵称： {{ user.name }}</p>{% endif %}
+      {% if user.location %}<p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> 所在城市： {{ user.location }}</p>{% endif %}
+      {% if user.about_me %}<p><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 个人show： <img src="{{ user.about_me }}" class="img-responsive img-thumbnail" alt=""> </p>{% endif %}
+    </p>
+    {% endif %}
+
+<a class="btn btn-primary btn-lg" href="{{ url_for('auth.weixin_register', username=user.username) }}">完善个人资料</a>
+</div>
+{% endblock %}

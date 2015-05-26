@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>购物成功
+    </h1>
+</div>
+
+<ul class="posts">
+  <li class="post">
+    <div class="post-author">
+      <a class="btn btn-success btn-lg" href="{{ url_for('.his_order') }}">
+	查看订单历史
+      </a>
+    </div>
+    <h3>总价格： ￥{{ post.sumcost }}</h3>
+  </li>
+</ul>
+
+{% if post.fetchway %}
+<h2>请到自提点领取商品</h2>
+{% else %}
+<h2>我们将在24小时内送达，请耐心等待</h2>
+{% endif %}
+<br>
+
+{% endblock %}

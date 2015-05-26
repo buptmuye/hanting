@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>当前订单明细
+    </h1>
+</div>
+
+<ul class="posts">
+  {% for item in order.details.all() %}
+  <li class="post">
+    <div class="profile-thumbnail">
+      <a href="{{ url_for('.goods', id=item.goods_id) }}">
+	商品名称： {{ item.name }}
+      </a>
+    </div>
+    <div class="post-body">购买价格： ￥{{ item.pricenow }}</div>
+    <div class="post-body">购买数量： {{ item.numbers }}</div>
+    <a class="btn btn-primary" href="{{ url_for('.change_order', id=item.id) }}">修改子订单</a>
+    <a class="btn btn-danger" href="{{ url_for('.cancel_detail', id=item.id) }}">取消子订单</a>
+    <br><br><br>
+  </li>
+  {% endfor %}
+</ul>
+<a class="btn btn-warning btn-lg" href="{{ url_for('.index') }}">继续购物</a>
+<h2>总价：￥{{ order.sumcost }}</h2>
+<a class="btn btn-danger" href="{{ url_for('.cancel_post', id=order.id) }}">取消所有订单</a>
+<a class="btn btn-success" href="{{ url_for('.cal_post', id=order.id) }}">开始结算订单</a>
+{% endblock %}
