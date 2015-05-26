@@ -177,6 +177,11 @@ def weixin_login():
     #now use user_info to register or login
     user = User.query.filter_by(username=info_res['openid']).first()
     if user is not None and user.confirmed:
+        user.name = info_res['nickname']
+        user.about_me = info_res['headimgurl']
+        user.location = info_res['province'] + info_res['city']
+        db.session.add(user)
+        db.session.commit()
         login_user(user)
         return redirect(request.args.get('next') or url_for('main.index')) 
 
@@ -190,6 +195,12 @@ def weixin_login():
         db.session.commit()
         return render_template('auth/test_weixin.html', user=user)
     
+    user.name = info_res['nickname']
+    user.about_me = info_res['headimgurl']
+    user.location = info_res['province'] + info_res['city']
+    db.session.add(user)
+    db.session.commit()
+
     return render_template('auth/test_weixin.html', user=user)
 
 @auth.route('/weixin_register/<username>', methods=['GET', 'POST'])
