@@ -1,9 +1,0 @@
-尊敬的用户 {{ user.username }},
-请确认绑定激活您的新电子邮箱 <a href="{{ url_for('auth.change_email', token=token, _external=True) }}">点击此处</a>.
-当然,您也可以复制以下链接到浏览器地址栏中:
-{{ url_for('auth.change_email', token=token, _external=True) }}
-
-您忠实的朋友,
-汉亭生鲜购物中心欢迎您
-
-注意:通知邮件无需回复O(∩_∩)O~
